@@ -10,6 +10,11 @@
 <body>
     
     <div class="container">
+        <body>
+
+
+
+
 
         <video autoplay loop muted plays-inline class="background-clip">
             <source src="video.mp4" type="video/mp4">
@@ -20,10 +25,27 @@
             <p> A website that provides educational resources related to Science, Technology, Engineering, and Mathematics (STEM). <br> 
                 Its content focuses on promoting learning through interactive materials, innovative ideas, <br> 
                 and activities that help students develop critical thinking and problem-solving skills. </p><br> 
-            <a href="index(2).html"_blank">ENTER HERE</a>
+            <a href="index(2).html" class="enter-btn">ENTER HERE</a>
         </div>
-    </div>
+
+<div id="page-transition"></div>
 
 
 </body>
 </html>
+<script>
+const enterBtn = document.querySelector(".enter-btn");
+const transition = document.getElementById("page-transition");
+
+enterBtn.addEventListener("click", function(e){
+
+e.preventDefault(); // stop immediate redirect
+
+transition.classList.add("active"); // fade to black
+
+setTimeout(() => {
+window.location.href = "index(2).html";
+}, 1000); // wait for animation
+
+});
+</script>

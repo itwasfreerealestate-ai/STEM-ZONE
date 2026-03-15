@@ -20,6 +20,8 @@ color:white;
 scroll-behavior:smooth;
 }
 
+
+
 /* TEAM TITLE */
 
 #team h2{
@@ -379,12 +381,95 @@ border-radius:10px;
   }
 
 }
+#site-reveal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+z-index:9999;
+animation: revealSite 1.5s ease forwards;
+}
 
+@keyframes revealSite{
+0%{
+opacity:1;
+}
+70%{
+opacity:1;
+}
+100%{
+opacity:0;
+visibility:hidden;
+}
+}
+/* FULL SCREEN LOADER */
+#site-loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:black;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:9999;
+
+opacity:0;
+animation:
+loaderFadeIn 0.8s ease forwards,
+fadeLoader 2s ease 0.8s forwards;
+}
+@keyframes loaderFadeIn{
+0%{
+opacity:0;
+}
+100%{
+opacity:1;
+}
+}
+/* glowing ring */
+
+.loader-ring{
+width:80px;
+height:80px;
+border-radius:50%;
+border:4px solid rgba(0,200,255,0.2);
+border-top:4px solid #00c8ff;
+animation: spin 1s linear infinite;
+box-shadow:
+0 0 10px #00c8ff,
+0 0 25px #00c8ff,
+0 0 50px #00c8ff;
+}
+
+/* spinning */
+
+@keyframes spin{
+0%{transform:rotate(0deg);}
+100%{transform:rotate(360deg);}
+}
+
+/* fade out loader */
+
+@keyframes fadeLoader{
+0%{opacity:1;}
+80%{opacity:1;}
+100%{
+opacity:0;
+visibility:hidden;
+}
+}
 </style>
 </head>
 
 <body>
-
+<div id="site-reveal"></div>
+<div id="site-loader">
+  <div class="loader-ring"></div>
+</div>
 <!-- NAVBAR -->
 <nav>
    <div class="floating-numbers"></div> 

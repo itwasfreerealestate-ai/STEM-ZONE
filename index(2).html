@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STEM Zone</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#000;
+color:white;
+scroll-behavior:smooth;
+}
+
+/* TEAM TITLE */
+
+#team h2{
+text-align:center;
+font-size:40px;
+margin-bottom:10px;
+}
+
+.team-guide{
+text-align:center;
+color:#ccc;
+margin-bottom:30px;
+font-size:18px;
+}
+
+/* RESOURCES TITLE */
+
+#resources h2{
+text-align:center;
+font-size:40px;
+margin-bottom:10px;
+}
+
+.resources-guide{
+text-align:center;
+color:#ccc;
+margin-bottom:40px;
+font-size:18px;
+max-width:700px;
+margin-left:auto;
+margin-right:auto;
+}
+
+
+/* NAVIGATION */
+
+/* NAVBAR PROFESSIONAL STYLE WITH MOVING GRADIENT */
+nav{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 60px;
+  background: linear-gradient(-45deg, #0c0c0c, #2b2b2b, #141414, #5c5c5c);
+  background-size: 400% 400%;
+  animation: gradientMove 15s ease infinite;
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  transition: 0.3s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* Gradient Animation */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#00c8ff;
+}
+
+.menu a{
+margin-left:30px;
+cursor:pointer;
+text-decoration:none;
+color:white;
+font-weight:bold;
+}
+
+.menu a:hover{
+color:#00c8ff;
+}
+
+/* HERO */
+.hero {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 10%;
+  position: relative; /* needed for absolute children */
+  overflow: hidden; /* keep numbers inside hero */
+}
+
+.floating-numbers {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* full hero height */
+  pointer-events: none; 
+  overflow: hidden;
+  z-index: 1; /* BELOW hero-content */
+}
+
+.floating-numbers span {
+  position: absolute; /* allow free positioning */
+  top: 100%;          /* start below the hero */
+  color: #00c8ff;
+  font-weight: bold;
+  opacity: 0;
+  animation-name: floatNum;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2; /* above numbers */
+}
+
+.hero video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.hero h1{
+font-size:70px;
+color:#00c8ff;
+animation: glowTitle 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes glowTitle{
+
+0%{
+text-shadow:0 0 5px #00c8ff,
+0 0 10px #00c8ff,
+0 0 20px #00c8ff;
+}
+
+50%{
+text-shadow:0 0 10px #00e5ff,
+0 0 20px #00e5ff,
+0 0 40px #00e5ff;
+}
+
+100%{
+text-shadow:0 0 5px #00c8ff,
+0 0 15px #00c8ff,
+0 0 30px #00c8ff;
+}
+
+}
+/* SCROLL ANIMATION */
+.reveal{
+opacity:0;
+transform:translateY(60px);
+transition:all 1s ease;
+}
+
+.reveal.active{
+opacity:1;
+transform:translateY(0);
+}
+
+.hero p{
+font-size:22px;
+margin-top:10px;
+} 
+
+/* SECTIONS */
+
+section{
+padding:120px 10%;
+}
+.section-divider {
+  height: 4px;                /* thickness of the line */
+  background: linear-gradient(90deg, #00c8ff, #ffffff, #00c8ff);
+  background-size: 200% 100%;
+  animation: moveDivider 2s linear infinite;
+  margin: 60px 0;             /* adds space above and below the divider */
+  border-radius: 2px;
+}
+@keyframes moveDivider {
+  0% { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+/* Animation to slide the gradient */
+@keyframes moveDivider {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* TEAM */
+
+.people{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:30px;
+margin-top:40px;
+}
+
+.person{
+background:linear-gradient(135deg,#5b7cff,#00c8ff);
+border-radius:20px;
+padding:10px;
+cursor:pointer;
+}
+
+.person img{
+width:100%;
+border-radius:15px;
+}
+
+.bio{
+margin-top:30px;
+padding:20px;
+background:#111;
+display:none;
+border-left:4px solid #00c8ff;
+}
+/* Spotlight effect */
+.person-container {
+  position: relative; /* for arrow */
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.person-container.shrink {
+  transform: scale(0.7);
+  opacity: 0.5;
+}
+
+.person-container.active {
+  transform: scale(1.3);
+  z-index: 10;
+  opacity: 1;
+}
+
+/* Bio animation */
+.bio.animate-bio {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: bioFadeIn 0.5s forwards;
+  position: relative;
+}
+
+/* Arrow from bio to active member */
+.bio-arrow {
+  position: absolute;
+  width: 0; /* dynamically set in JS */
+  height: 2px;
+  background: #00c8ff;
+  transform-origin: top left;
+  z-index: 10;
+  transition: all 0.5s ease;
+}
+
+/* STEM RESOURCES */
+
+.stem-container{
+display:grid;
+grid-template-columns:200px 1fr;
+gap:30px;
+}
+
+.stem-grid{
+display:grid;
+grid-template-columns:repeat(2,200px);
+gap:20px;
+}
+
+.stem-box{
+width:200px;
+height:200px;
+border-radius:20px;
+overflow:hidden;
+cursor:pointer;
+position:relative;
+}
+
+.stem-box img{
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(70%);
+}
+
+.letter{
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%);
+font-size:80px;
+font-weight:bold;
+color:white;
+text-shadow:0 5px 15px black;
+}
+
+/* CONTENT PANEL */
+
+.stem-content{
+background:linear-gradient(135deg,#7fa4d1,#5a86c8);
+border-radius:20px;
+padding:30px;
+min-height:200px;
+}
+
+.stem-content video{
+width:100%;
+margin-top:20px;
+border-radius:10px;
+}
+
+#team h2, #resources h2, #quiz h2 {
+  color: #00c8ff; /* base color */
+  text-align: center;
+  animation: glowSection 3s ease-in-out infinite alternate;
+  text-shadow:
+    0 0 2px #00c8ff,
+    0 0 4px #00c8ff,
+    0 0 6px #00c8ff;
+}
+
+@keyframes glowSection {
+  0% {
+    text-shadow:
+      0 0 2px #00c8ff,
+      0 0 4px #00c8ff,
+      0 0 6px #00c8ff;
+  }
+  50% {
+    text-shadow:
+      0 0 3px #00c8ff,
+      0 0 6px #00c8ff,
+      0 0 8px #00c8ff;
+  }
+  100% {
+    text-shadow:
+      0 0 2px #00c8ff,
+      0 0 4px #00c8ff,
+      0 0 6px #00c8ff;
+  }
+}
+@keyframes floatNum {
+  0% {
+    transform: translateY(100%); /* start below the hero */
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%); /* float up past top */
+    opacity: 0;
+  }
+
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav>
+   <div class="floating-numbers"></div> 
+  <div class="logo-container">
+    <div class="logo">STEM ZONE</div>
+    <div class="tagline">Learning, Innovation, Discovery</div>
+  </div>
+
+  <div class="menu">
+    <a onclick="scrollToSection('team')">TEAMS</a>
+    <a onclick="scrollToSection('resources')">RESOURCES</a>
+    <a onclick="scrollToSection('quiz')">QUIZ</a>
+  </div>
+
+</nav>
+<script>
+ 
+const numContainer = document.querySelector('.floating-numbers');
+
+for (let i = 0; i < 30; i++) {
+  const num = document.createElement('span');
+  num.innerText = Math.floor(Math.random() * 10);
+  num.style.left = Math.random() * 100 + '%';
+  num.style.animationDuration = 3 + Math.random() * 5 + 's';
+  num.style.fontSize = 12 + Math.random() * 20 + 'px';
+  numContainer.appendChild(num);
+}
+</script>
+<!-- HERO -->
+
+<section class="hero">
+  <video autoplay muted loop>
+    <source src="stemvideo.mp4" type="video/mp4">
+  </video>
+
+  <div class="hero-content">
+    <h1>STEM ZONE</h1>
+    <p>Learning, Innovation and Discovery</p>
+    <button class="know-btn" onclick="toggleInfo()">Know More</button>
+
+
+
+    <div id="site-info" class="site-info">
+      <p>
+        STEM Zone is an interactive educational website that introduces users to the four
+        major fields of STEM: Science, Technology, Engineering, and Mathematics.
+        Visitors can explore videos and learning materials by clicking the STEM letters,
+        learn about the team members who created the project, and understand how each
+        STEM discipline contributes to innovation and real-world problem solving.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- TEAM SECTION -->
+<section id="team" class="reveal">
+  <h2>OUR TEAM</h2>
+  <p class="team-guide">
+    Click on a team member to learn more about them. Their biography will appear below once selected.
+  </p>
+
+  <div class="team-carousel">
+    <button class="carousel-btn left" onclick="selectMember(-1)">‹</button>
+
+    <div class="people">
+      <div class="person-container">
+        <div class="person" onclick="showBio('bio1', this)">
+          <img src="person1.png" alt="Mary Elaine Bernardo">
+        </div>
+      </div>
+      <div class="person-container">
+        <div class="person" onclick="showBio('bio2', this)">
+          <img src="person2.png" alt="John Mark Terrana">
+        </div>
+      </div>
+      <div class="person-container">
+        <div class="person" onclick="showBio('bio3', this)">
+          <img src="person3.png" alt="Jazrylle Chey Manallo">
+        </div>
+      </div>
+      <div class="person-container">
+        <div class="person" onclick="showBio('bio4', this)">
+          <img src="person4.png" alt="Ashly Mendoza">
+        </div>
+      </div>
+      <div class="person-container">
+        <div class="person" onclick="showBio('bio5', this)">
+          <img src="person5.png" alt="Rain Cyrus Caindoy">
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-btn right" onclick="selectMember(1)">›</button>
+  </div>
+
+     <div class="bios">
+    <div class="bio" id="bio1">
+        <h3>Mary Elaine Bernardo</h3>
+        <p>Senior High School STEM student with a strong interest in technology and a solid foundation in logical thinking. <br>
+    Shows the ability to work effectively both independently and in collaborative environments. Applies basic technical <br>
+    knowledge and problem-solving skills to real-world challenges. Actively seeks opportunities for improvement and welcomes <br>
+    helpful feedback, using it effectively to enhance performance and learning outcomes.</p>
+    <div class="bio-arrow"></div>
+      </div>
+
+<div class="bio" id="bio2">
+        <h3>John Mark Terrana</h3>
+        <p>AA detail-oriented and fervent Senior High School STEM student towards the ratification and transformative finalization showcase.<br>
+     Beyond detail, excels in communication and acumen within consensus or what was agreed upon. Rooted in a history of effective <br>
+     leadership and unwavering commitment---lead to acknowledged Analytical, Assiduous, Collaborative, and ultimately a Visionary <br>
+     upon different aspects of a project.</p>
+        <div class="bio-arrow"></div>
+      </div>
+
+<div class="bio" id="bio3">
+        <h3>Jazrylle Chey Manallo</h3>
+       <p>A Senior High School STEM student who is competent in employing designs and ideas, <br>
+    as well as capable of learning new things. Enthusiastic about sharing potential skills and abilities<br>
+     that will contribute to the effective development. Demonstrates a willingness to learn and innovate<br>
+      with a strong foundation in science, mathematics, and technology, eager to apply creative problem-solving <br>
+      skills in collaborative environments. Committed to producing high-quality, unique projects, while actively <br>
+      sharing ideas and fostering teamwork.</p>
+        <div class="bio-arrow"></div>
+      </div>
+
+    <div class="bio" id="bio4">
+        <h3>Ashly Mendoza</h3>
+        <p>A hardworking Senior High School student with a willingness to continuously learn and improve. <br>
+    Demonstrates the ability to create innovative ideas, adapt to new challenges, and collaborate effectively <br>
+    in team-based environments. Possesses a growing excellence in academic and practical skills, with enthusiasm <br>
+    for developing talents that contribute to positive outcomes.</p>
+        <div class="bio-arrow"></div>
+      </div>
+
+     <div class="bio" id="bio5">
+        <h3>Rain Cyrus Caindoy</h3>
+      <p> A graduating Grade 12 STEM student at Sacred Heart Academy of Sta. Maria, Bulacan, with a strong foundation in teamwork, <br>
+    active listening, and effective communication. Demonstrates the ability to learn new concepts quickly and continuously <br>
+    improve skills through dedication and self-discipline. Target-driven and highly motivated, with a strong work ethic and a <br>
+    positive attitude toward challenges. Adaptable and well-prepared to face academic and real-world demands, with a commitment <br>
+    to personal growth, collaboration, and excellence in future endeavors.</p>
+
+ <div>
+</section>
+
+<style>
+    
+.team-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.people {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 10px 0;
+  flex-wrap: nowrap; /* crucial: no wrapping */
+  -ms-overflow-style: none;  /* hide scrollbar IE/Edge */
+  scrollbar-width: none;     /* hide scrollbar Firefox */
+}
+.people::-webkit-scrollbar {
+  display: none; /* hide scrollbar Chrome/Safari */
+}
+
+.carousel-btn {
+  background: #00c8ff;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  opacity: 0.8;
+}
+.carousel-btn:hover { opacity: 1; }
+.carousel-btn.left { left: -30px; }
+.carousel-btn.right { right: -30px; }
+
+.person-container {
+  position: relative;
+  transition: transform 0.5s, opacity 0.5s;
+}
+
+.person-container.shrink {
+  transform: scale(0.7);
+  opacity: 0.5;
+}
+
+.person-container.active {
+  transform: scale(1.3);
+  z-index: 10;
+  opacity: 1;
+}
+
+.person {
+  cursor: pointer;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.person img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 15px;
+}
+
+.bio {
+  display: none;
+  background: #111;
+  padding: 20px;
+  margin: 20px auto;
+  max-width: 600px;
+  border-left: 4px solid #00c8ff;
+  position: relative;
+  border-radius: 10px;
+}
+
+.bio-arrow {
+  position: absolute;
+  height: 2px;
+  background: #00c8ff;
+  width: 0;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
+}
+
+.bio.animate-bio {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: bioFadeIn 0.5s forwards;
+}
+
+@keyframes bioFadeIn 
+  to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+  .team-carousel {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-top: 40px;
+}
+
+.people {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: 0 10%; /* ensures first and last member can center */
+  flex-wrap: nowrap;
+  justify-content: center; /* ensures flex items stay centered */
+  -ms-overflow-style: none;  
+  scrollbar-width: none;
+}
+
+.people::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-btn {
+  background: #00c8ff;
+  border: none;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+  opacity: 0.8;
+}
+.carousel-btn:hover { opacity: 1; }
+.carousel-btn.left { left: -30px; }
+.carousel-btn.right { right: -30px; }
+
+</style>
+
+<script>
+let currentIndex = 0;
+const people = document.querySelectorAll(".person-container");
+const carousel = document.querySelector('.team-carousel .people');
+let autoRotate;
+
+// Show bio function (unchanged)
+function showBio(id, clickedPerson) {
+  const bios = document.querySelectorAll(".bio");
+  bios.forEach(b => { b.style.display = "none"; b.classList.remove("animate-bio"); });
+  people.forEach(c => { c.classList.remove("active", "shrink"); });
+
+  const bio = document.getElementById(id);
+  bio.style.display = "block";
+  bio.classList.add("animate-bio");
+
+  clickedPerson.parentElement.classList.add("active");
+  people.forEach(c => { if(c !== clickedPerson.parentElement) c.classList.add("shrink"); });
+
+  // Arrow pointing
+  const arrow = bio.querySelector(".bio-arrow");
+  const bioRect = bio.getBoundingClientRect();
+  const personRect = clickedPerson.getBoundingClientRect();
+  const dx = (personRect.left + personRect.width/2) - (bioRect.left + bioRect.width/2);
+  const dy = (personRect.top + personRect.height/2) - bioRect.top;
+  const length = Math.sqrt(dx*dx + dy*dy);
+  const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+  arrow.style.width = length + "px";
+  arrow.style.left = (bioRect.width/2) + "px";
+  arrow.style.top = "0px";
+  arrow.style.transform = `rotate(${angle}deg)`;
+
+  currentIndex = Array.from(people).indexOf(clickedPerson.parentElement);
+}
+
+// Select member + scroll centered
+function selectMember(direction) {
+  currentIndex = (currentIndex + direction + people.length) % people.length;
+  const nextPerson = people[currentIndex].querySelector(".person");
+  showBio(nextPerson.getAttribute("onclick").match(/'([^']+)'/)[1], nextPerson);
+
+  // Scroll carousel to center
+  const container = people[currentIndex];
+  const carouselRect = carousel.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  const scrollLeft = carousel.scrollLeft + (containerRect.left + containerRect.width/2 - (carouselRect.left + carouselRect.width/2));
+  carousel.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+}
+
+// Auto-select first member
+window.addEventListener("load", () => {
+  const firstPerson = people[0].querySelector(".person");
+  showBio(firstPerson.getAttribute("onclick").match(/'([^']+)'/)[1], firstPerson);
+
+  startAutoRotate();
+});
+
+// Auto-rotation function
+function startAutoRotate() {
+  stopAutoRotate(); // prevent multiple intervals
+  autoRotate = setInterval(() => selectMember(1), 3000);
+}
+
+// Stop auto-rotation
+function stopAutoRotate() {
+  clearInterval(autoRotate);
+}
+
+// Pause auto-rotation on hover
+carousel.addEventListener("mouseenter", stopAutoRotate);
+carousel.addEventListener("mouseleave", startAutoRotate);
+</script>
+
+
+<section id="resources" class="reveal">
+  <video autoplay muted loop playsinline id="stem-bg-video">
+    <source src="stemzone-bg.mp4" type="video/mp4">
+  </video>
+
+  <div class="resources-content">
+    <h2>STEM RESOURCES</h2>
+
+    <p class="resources-guide">
+      Click on the letters <b>S</b>, <b>T</b>, <b>E</b>, or <b>M</b> to explore each STEM field.
+      A panel will open beside the letter containing a short explanation and an educational video.
+      Click another letter to switch topics.
+    </p>
+
+
+<div class="stem-container">
+
+<!-- S -->
+<div class="stem-row">
+    
+<div class="stem-box" onclick="toggleStem('science-panel')">
+<img src="science.png">
+<div class="letter">S</div>
+</div>
+
+<div class="stem-panel" id="science-panel">
+<video controls>
+<source src="science.mp4" type="video/mp4">
+</video>
+<h3>Science</h3>
+<p>is the study of the natural world through observation, experimentation, and analysis. It helps people understand how living organisms, matter, energy, and natural forces interact with each other. From studying tiny cells to exploring distant planets, science allows humans to learn more about the universe and how it works.
+
+</div>
+
+</div>
+
+
+<!-- T -->
+<div class="stem-row">
+
+<div class="stem-box" onclick="toggleStem('tech-panel')">
+<img src="technology.png">
+<div class="letter">T</div>
+</div>
+
+<div class="stem-panel" id="tech-panel">
+<video controls>
+<source src="technology.mp4" type="video/mp4">
+</video>
+<h3>Technology</h3>
+<p>refers to the tools, machines, and systems that people create to solve problems and make everyday tasks easier. It applies scientific knowledge in practical ways to improve communication, transportation, healthcare, and many other aspects of life.
+
+
+</div>
+
+</div>
+
+
+<!-- E -->
+<div class="stem-row">
+
+<div class="stem-box" onclick="toggleStem('engineering-panel')">
+<img src="engineering.png">
+<div class="letter">E</div>
+</div>
+
+<div class="stem-panel" id="engineering-panel">
+<video controls>
+<source src="engineering.mp4" type="video/mp4">
+</video>
+<h3>Engineering</h3>
+<p> is the application of science and mathematics to design, build, and improve structures, machines, and systems. Engineers use creativity and technical knowledge to develop solutions that address real-world challenges.
+
+
+</div>
+
+</div>
+
+
+<!-- M -->
+<div class="stem-row">
+
+<div class="stem-box" onclick="toggleStem('math-panel')">
+<img src="mathematics.png">
+<div class="letter">M</div>
+</div>
+
+<div class="stem-panel" id="math-panel">
+<video controls>
+<source src="math.mp4" type="video/mp4">
+</video>
+<h3>Mathematics</h3>
+<p> is the study of numbers, patterns, quantities, and relationships. It provides the logical framework used in science, engineering, and technology to analyze problems and develop solutions.
+
+</section> 
+<div class="section-divider"></div> <!-- moving divider here -->
+
+</div>
+
+</div>
+
+</section>
+
+<script>
+
+function toggleStem(panelId){
+
+const container = document.querySelector(".stem-container");
+const panels = document.querySelectorAll(".stem-panel");
+
+let isOpening = true;
+
+panels.forEach(panel=>{
+if(panel.id !== panelId){
+panel.classList.remove("active");
+}
+});
+
+let selected = document.getElementById(panelId);
+
+if(selected.classList.contains("active")){
+selected.classList.remove("active");
+isOpening = false;
+}else{
+selected.classList.add("active");
+}
+
+if(isOpening){
+container.classList.add("open");
+}else{
+let anyOpen = document.querySelector(".stem-panel.active");
+if(!anyOpen){
+container.classList.remove("open");
+}
+}
+
+}
+
+
+</script>
+
+    
+
+
+<style>
+/* TEAM ANIMATION */
+.person.animate-move {
+  position: absolute;
+  z-index: 100;
+  transition: all 0.8s ease-in-out;
+  width: 150px; /* adjust if you want bigger */
+  height: auto;
+  border-radius: 15px;
+}
+
+.bio.animate-bio {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: bioFadeIn 0.6s forwards;
+}
+
+@keyframes bioFadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.hero-content{
+max-width:900px;
+position:relative;
+z-index:2;
+}
+
+/* container holds all STEM letters vertically */
+.stem-container {
+    display: flex;
+    flex-direction: column; /* stack vertically */
+    gap: 15px;              /* small gap between letters */
+    transition: 0.4s;
+}
+
+/* each row holds the box + panel side by side */
+.stem-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    transition: 0.4s;
+}
+
+/* STEM box styling */
+.stem-box {
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+}
+
+/* Letter on top of box */
+.letter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 4px 12px black;
+}
+
+/* Panel (hidden by default) */
+.stem-panel {
+    max-width: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: 0.4s;
+    background: linear-gradient(135deg, #7fa4d1, #5a86c8);
+    border-radius: 15px;
+    padding: 0;
+}
+
+/* Show panel when active */
+.stem-panel.active {
+    max-width: 520px;
+    opacity: 1;
+    padding: 20px;
+}
+
+.stem-panel video{
+width:100%;
+border-radius:10px;
+margin-bottom:10px;
+}
+
+#resources {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    padding: 0; /* remove padding from section */
+}
+
+#stem-bg-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;   /* full viewport width */
+    height: 100%;   /* full section height */
+    object-fit: cover;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.5; /* dim slightly */
+}
+
+/* Content wrapper inside resources */
+.resources-content {
+    position: relative;
+    z-index: 1;
+    padding: 120px 10%; /* spacing for headings, guide text, and STEM boxes */
+}
+
+/* Make STEM content appear above the video */
+.stem-container, .resources-guide, h2 {
+    position: relative;
+    z-index: 1;
+}
+</style>
+
+<audio id="bgMusic" loop>
+<source src="music.mp3" type="audio/mpeg">
+</audio>
+<style>
+.know-btn{
+margin-top:20px;
+padding:12px 25px;
+border:none;
+border-radius:25px;
+background:#00c8ff;
+color:white;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.know-btn:hover{
+background:#0096c7;
+}
+
+/* when opened */
+
+.site-info {
+  max-height: 0;            /* collapsed */
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.6s ease, opacity 0.5s ease, padding 0.5s ease;
+  padding: 0 20px;          /* horizontal padding only initially */
+  background: rgba(0,0,0,0.7);
+  border-radius: 15px;
+  margin-top: 0;
+}
+
+.site-info.open {
+  max-height: 500px;        /* adjust based on content */
+  opacity: 1;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+
+/* WHOLE SITE GLOW EFFECT */
+body.site-glow::before {
+  content: "";
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,232,255,0.4); /* neon blue overlay */
+  pointer-events: none; /* don't block clicks */
+  animation: siteFlash 1.8s ease forwards;
+  z-index: 9999; /* above all content */
+}
+
+@keyframes siteFlash {
+  0%   { opacity: 0; }
+  30%  { opacity: 1; }
+  60%  { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+</style>
+
+<script>
+function toggleInfo() {
+  const info = document.getElementById("site-info");
+
+  // Toggle info panel
+  info.classList.toggle("open");
+
+  // Add glow overlay
+  document.body.classList.add("site-glow");
+
+  // Remove glow after animation
+  setTimeout(() => {
+    document.body.classList.remove("site-glow");
+  }, 1800); // same duration as CSS animation
+}
+
+const music = document.getElementById("bgMusic");
+
+document.addEventListener("click", function startMusic(){
+
+music.play();
+document.removeEventListener("click", startMusic);
+
+});
+
+</script>
+
+<script>
+
+function toggleInfo(){
+
+const info = document.getElementById("site-info");
+
+info.classList.toggle("open");
+
+/* SITE GLOW */
+document.body.classList.add("site-glow");
+
+setTimeout(()=>{
+document.body.classList.remove("site-glow");
+},1800);
+
+}
+
+</script>
+<script>
+
+const music = document.getElementById("bgMusic");
+
+function startMusic(){
+music.play();
+document.removeEventListener("mousemove", startMusic);
+document.removeEventListener("scroll", startMusic);
+document.removeEventListener("click", startMusic);
+}
+
+document.addEventListener("mousemove", startMusic);
+document.addEventListener("scroll", startMusic);
+document.addEventListener("click", startMusic);
+
+</script>
+
+
+
+<script>
+
+function scrollToSection(id){
+document.getElementById(id).scrollIntoView({
+behavior: "smooth"
+});
+}
+
+</script>
+
+<section id="quiz" class="reveal">
+
+<h2 style="text-align:center;font-size:40px;margin-bottom:20px;">STEM KNOWLEDGE QUIZ</h2>
+
+<p style="text-align:center;color:#ccc;margin-bottom:40px;">
+Test your knowledge of Science, Technology, Engineering, and Mathematics.
+</p>
+
+<form id="quizForm">
+
+<div class="quiz-question">
+<p>1. What is the study of living organisms?</p>
+<label><input type="radio" name="q1" value="science"> Biology</label>
+<label><input type="radio" name="q1" value="wrong"> Programming</label>
+<label><input type="radio" name="q1" value="wrong"> Architecture</label>
+</div>
+
+<div class="quiz-question">
+<p>2. What gas do plants absorb during photosynthesis?</p>
+<label><input type="radio" name="q2" value="science"> Carbon Dioxide</label>
+<label><input type="radio" name="q2" value="wrong"> Oxygen</label>
+<label><input type="radio" name="q2" value="wrong"> Nitrogen</label>
+</div>
+
+<div class="quiz-question">
+<p>3. Which of the following is an example of technology?</p>
+<label><input type="radio" name="q3" value="technology"> Smartphone</label>
+<label><input type="radio" name="q3" value="wrong"> Tree</label>
+<label><input type="radio" name="q3" value="wrong"> River</label>
+</div>
+
+<div class="quiz-question">
+<p>4. What does software control?</p>
+<label><input type="radio" name="q4" value="technology"> Computer operations</label>
+<label><input type="radio" name="q4" value="wrong"> Plant growth</label>
+<label><input type="radio" name="q4" value="wrong"> Gravity</label>
+</div>
+
+<div class="quiz-question">
+<p>5. Engineers mainly focus on:</p>
+<label><input type="radio" name="q5" value="engineering"> Designing solutions</label>
+<label><input type="radio" name="q5" value="wrong"> Writing novels</label>
+<label><input type="radio" name="q5" value="wrong"> Teaching history</label>
+</div>
+
+<div class="quiz-question">
+<p>6. Bridges and buildings are designed using:</p>
+<label><input type="radio" name="q6" value="engineering"> Engineering principles</label>
+<label><input type="radio" name="q6" value="wrong"> Cooking recipes</label>
+<label><input type="radio" name="q6" value="wrong"> Painting techniques</label>
+</div>
+
+<div class="quiz-question">
+<p>7. What is 12 × 8?</p>
+<label><input type="radio" name="q7" value="math"> 96</label>
+<label><input type="radio" name="q7" value="wrong"> 88</label>
+<label><input type="radio" name="q7" value="wrong"> 108</label>
+</div>
+
+<div class="quiz-question">
+<p>8. Which field focuses on numbers and patterns?</p>
+<label><input type="radio" name="q8" value="math"> Mathematics</label>
+<label><input type="radio" name="q8" value="wrong"> Literature</label>
+<label><input type="radio" name="q8" value="wrong"> Geography</label>
+</div>
+
+<button type="button" onclick="calculateScore()" class="quiz-btn">Submit Quiz</button>
+
+</form>
+
+<div id="quizResult"></div>
+
+</section>
+
+<style>
+    #quiz{
+padding:120px 10%;
+background:#050505;
+}
+
+.quiz-question{
+margin-bottom:30px;
+background:#111;
+padding:20px;
+border-radius:10px;
+}
+
+.quiz-question p{
+margin-bottom:10px;
+font-weight:bold;
+}
+
+.quiz-question label{
+display:block;
+margin:5px 0;
+cursor:pointer;
+}
+
+.quiz-btn{
+margin-top:20px;
+padding:12px 30px;
+border:none;
+border-radius:25px;
+background:#00c8ff;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+#quizResult{
+margin-top:40px;
+padding:25px;
+background:#111;
+border-left:5px solid #00c8ff;
+font-size:18px;
+}
+</style>
+
+<script> 
+
+function calculateScore(){
+
+let science=0;
+let technology=0;
+let engineering=0;
+let math=0;
+
+const answers = document.querySelectorAll('input[type=radio]:checked');
+
+answers.forEach(ans=>{
+
+if(ans.value === "science") science++;
+if(ans.value === "technology") technology++;
+if(ans.value === "engineering") engineering++;
+if(ans.value === "math") math++;
+
+});
+
+let total = science + technology + engineering + math;
+
+let resultText = `
+<h3>Your STEM Knowledge Result</h3>
+<p><b>Total Correct:</b> ${total} / 8</p>
+<p>Science Score: ${science}/2</p>
+<p>Technology Score: ${technology}/2</p>
+<p>Engineering Score: ${engineering}/2</p>
+<p>Mathematics Score: ${math}/2</p>
+`;
+
+if(total >=6){
+resultText += "<p><b>Excellent STEM knowledge!</b></p>";
+}else if(total >=4){
+resultText += "<p><b>Good understanding of STEM fields.</b></p>";
+}else{
+resultText += "<p><b>You may want to explore the STEM resources above to learn more.</b></p>";
+}
+
+document.getElementById("quizResult").innerHTML = resultText;
+
+}
+
+</script>
+
+ 
+<footer class="footer">
+STEM ZONE © 2026 Copyright <br>
+All rights reserved to MUC
+</footer>
+
+<style>
+.footer{
+text-align:center;
+padding:25px;
+background:#000;
+color:#888;
+font-size:14px;
+border-top:1px solid #222;
+margin-top:80px;
+}
+</style>
+
+<script>
+
+function revealOnScroll(){
+
+const reveals = document.querySelectorAll(".reveal");
+
+reveals.forEach((element)=>{
+
+const windowHeight = window.innerHeight;
+const elementTop = element.getBoundingClientRect().top;
+const revealPoint = 120;
+
+if(elementTop < windowHeight - revealPoint){
+element.classList.add("active");
+}
+
+});
+
+}
+
+window.addEventListener("scroll", revealOnScroll);
+window.addEventListener("load", revealOnScroll);
+
+</script>
+
+</body>
+</html>
+
+<style>
+/* Section Gradients */
+#team {
+  background: linear-gradient(135deg, #010101, #000000, #484848);
+  background-size: 400% 400%;
+  animation: gradientSection 12s ease infinite;
+}
+
+#resources {
+  background: linear-gradient(135deg, #000000, #000000, #000000);
+  background-size: 400% 400%;
+  animation: gradientSection 12s ease infinite;
+}
+
+#quiz {
+  background: linear-gradient(135deg, #161616, #000000, #252525);
+  background-size: 400% 400%;
+  animation: gradientSection 12s ease infinite;
+}
+
+/* Gradient Animation Keyframes */
+@keyframes gradientSection {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+</style>
